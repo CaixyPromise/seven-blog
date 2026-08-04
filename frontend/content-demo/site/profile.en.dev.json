@@ -1,0 +1,29 @@
+{
+  "siteName": "Example Journal",
+  "brandName": "Example Journal",
+  "tagline": "A demo personal blog",
+  "description": "A synthetic content set for demonstrating the blog runtime.",
+  "owner": {
+    "name": "Demo Author",
+    "role": "Writer and builder",
+    "avatar": "/avatar-1024.png",
+    "bio": "This profile is fictional and exists only in the public demo content.",
+    "location": "Internet"
+  },
+  "contact": {
+    "email": "hello@example.com",
+    "availabilityText": "This is a demonstration contact profile.",
+    "ctaLabel": "Contact"
+  },
+  "socialLinks": [
+    {
+      "label": "GitHub",
+      "href": "https://github.com/example",
+      "handle": "@example",
+      "platform": "github",
+      "visibleInHeader": true,
+      "visibleInFooter": true,
+      "sortOrder": 1
+    }
+  ]
+}

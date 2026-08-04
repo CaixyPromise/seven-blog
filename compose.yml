@@ -1,0 +1,49 @@
+name: caixypromise-blog
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+    env_file:
+      - path: ./deploy/frontend.env
+        required: false
+    environment:
+      NODE_ENV: production
+      CONTENT_SOURCE: file
+      CONTENT_ROOT: /content-store/current
+      CONTENT_ENV: prod
+    ports:
+      - "127.0.0.1:3000:3000"
+    volumes:
+      - ${CONTENT_STORE_HOST_PATH:-/srv/caixypromise-content}:/content-store:ro
+    depends_on:
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "node -e \"fetch('http://127.0.0.1:3000/api/health/content').then((r) => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))\""]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: ./backend
+    env_file:
+      - path: ./deploy/backend.env
+        required: false
+    environment:
+      NODE_ENV: production
+      DATABASE_PATH: /app/data/blog.sqlite
+    ports:
+      - "127.0.0.1:4000:4000"
+    volumes:
+      - ${INTERACTION_DATA_HOST_PATH:-/srv/caixypromise-blog/data}:/app/data
+    healthcheck:
+      test: ["CMD-SHELL", "node -e \"fetch('http://127.0.0.1:4000/health').then((r) => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))\""]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped

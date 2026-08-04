@@ -1,0 +1,5 @@
+[
+  { "label": "Home", "href": "/", "location": "header", "external": false, "enabled": true, "sortOrder": 1 },
+  { "label": "Blog", "href": "/blog", "location": "header", "external": false, "enabled": true, "sortOrder": 2 },
+  { "label": "Notes", "href": "/notes", "location": "header", "external": false, "enabled": true, "sortOrder": 3 }
+]

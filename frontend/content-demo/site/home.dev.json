@@ -1,0 +1,22 @@
+{
+  "hero": {
+    "eyebrow": "DEMO JOURNAL",
+    "titlePrefix": "A place to",
+    "rotatingPhrases": ["write", "learn", "make notes"],
+    "description": "A synthetic home page used to demonstrate the portable content runtime.",
+    "currentOrgLabel": "Demo content",
+    "primaryCta": { "label": "Read posts", "href": "/blog" },
+    "secondaryCta": { "label": "Browse notes", "href": "/notes" },
+    "terminalTitle": "terminal://DEMO",
+    "terminalProfile": {
+      "title": "EXAMPLE JOURNAL",
+      "subtitle": "Public demo content",
+      "rows": [
+        { "key": "writing", "value": "notes and essays" },
+        { "key": "status", "value": "demo mode" }
+      ]
+    },
+    "versionLabel": "demo",
+    "dateLabel": "since 2026"
+  }
+}

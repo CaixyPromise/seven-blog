@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "name": "demo-journal",
+    "description": "A fictional workbench item used by the public fixture.",
+    "progress": 75,
+    "lastUpdated": "2026",
+    "url": "https://github.com/example/demo-journal",
+    "branch": "main",
+    "commits": 0,
+    "status": "active",
+    "sortOrder": 1
+  }
+]

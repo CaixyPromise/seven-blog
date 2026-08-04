@@ -1,0 +1,59 @@
+name: Publish content
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/checkout@v4
+        with:
+          repository: your-org/self-blog
+          path: site-runtime
+          ssh-key: ${{ secrets.CONTENT_REPO_DEPLOY_KEY }}
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: site-runtime/frontend/pnpm-lock.yaml
+      - run: pnpm --dir site-runtime/frontend install --frozen-lockfile
+      - run: CONTENT_ROOT="$GITHUB_WORKSPACE" pnpm --dir site-runtime/frontend content:check
+      - id: activate
+        name: Upload staged content and activate it
+        env:
+          CONTENT_DEPLOY_TARGET: ${{ secrets.CONTENT_DEPLOY_TARGET }}
+          CONTENT_DEPLOY_SSH_KEY: ${{ secrets.CONTENT_DEPLOY_SSH_KEY }}
+        run: |
+          install -m 600 /dev/null ~/.ssh/content-deploy
+          printf '%s' "$CONTENT_DEPLOY_SSH_KEY" > ~/.ssh/content-deploy
+          export GIT_SSH_COMMAND="ssh -i ~/.ssh/content-deploy -o StrictHostKeyChecking=accept-new"
+          release="${GITHUB_SHA}"
+          ssh "$CONTENT_DEPLOY_TARGET" "mkdir -p /srv/caixypromise-content/releases/$release"
+          rsync -a --delete --exclude=.git --exclude=site-runtime ./ "$CONTENT_DEPLOY_TARGET:/srv/caixypromise-content/releases/$release/"
+          ssh "$CONTENT_DEPLOY_TARGET" "CONTENT_STORE_ROOT=/srv/caixypromise-content bash -s -- $release" < site-runtime/frontend/deploy/activate-content-release.sh
+          echo "release=$release" >> "$GITHUB_OUTPUT"
+      - name: Revalidate published content
+        env:
+          CONTENT_GIT_BASE: ${{ github.event.before }}
+          CONTENT_GIT_HEAD: ${{ github.sha }}
+          CONTENT_REVALIDATE_URL: ${{ secrets.CONTENT_REVALIDATE_URL }}
+          CONTENT_REVALIDATE_SECRET: ${{ secrets.REVALIDATE_SECRET }}
+        run: node site-runtime/frontend/scripts/revalidate-content-diff.mjs
+      - name: Roll back when revalidation fails
+        if: failure() && steps.activate.outputs.release != ''
+        env:
+          CONTENT_DEPLOY_TARGET: ${{ secrets.CONTENT_DEPLOY_TARGET }}
+          CONTENT_DEPLOY_SSH_KEY: ${{ secrets.CONTENT_DEPLOY_SSH_KEY }}
+        run: |
+          install -m 600 /dev/null ~/.ssh/content-deploy
+          printf '%s' "$CONTENT_DEPLOY_SSH_KEY" > ~/.ssh/content-deploy
+          export GIT_SSH_COMMAND="ssh -i ~/.ssh/content-deploy -o StrictHostKeyChecking=accept-new"
+          ssh "$CONTENT_DEPLOY_TARGET" "CONTENT_STORE_ROOT=/srv/caixypromise-content bash -s" < site-runtime/frontend/deploy/rollback-content-release.sh

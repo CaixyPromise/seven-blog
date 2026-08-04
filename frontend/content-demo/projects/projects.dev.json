@@ -1,0 +1,15 @@
+[
+  {
+    "id": 1,
+    "title": "Demo Project",
+    "description": "A fictional project used to demonstrate project cards and filters.",
+    "tags": ["Demo", "TypeScript"],
+    "status": "shipped",
+    "year": "2026",
+    "stars": 0,
+    "forks": 0,
+    "url": "https://github.com/example/demo-project",
+    "featured": true,
+    "highlight": true
+  }
+]

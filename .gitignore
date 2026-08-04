@@ -1,0 +1,19 @@
+# Local deployment configuration and generated credentials.
+/deploy/*.env
+!/deploy/*.env.example
+
+# Real content belongs to the private content repository.
+/frontend/content/
+
+# Generated local artifacts.
+.DS_Store
+.pnpm-store/
+.playwright-mcp/
+output/
+**/node_modules/
+**/.next/
+**/dist/
+**/data/
+**/*.tsbuildinfo
+code-block-copy-check.png
+mermaid-*-check.png

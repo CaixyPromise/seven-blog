@@ -1,0 +1,52 @@
+{
+  "hero": {
+    "eyebrow": "ABOUT",
+    "titlePrefix": "A",
+    "highlightedText": "demo profile",
+    "description": "A fictional profile for validating the introduction page."
+  },
+  "about": {
+    "eyebrow": "PROFILE",
+    "title": "Built for local development",
+    "body": ["This content is intentionally generic.", "Real personal material belongs in the private content repository."]
+  },
+  "educationHeading": {
+    "eyebrow": "LEARNING",
+    "title": "Sample education",
+    "description": "Placeholder information for layout validation."
+  },
+  "education": {
+    "period": "2020 - 2024",
+    "school": "Example University",
+    "degree": "Bachelor's degree",
+    "major": "Computer Science",
+    "gpa": "3.5",
+    "rank": "Top 30%",
+    "narrative": ["A fictional learning path used only in the demo."],
+    "courses": [{ "name": "Software Design", "score": 90 }]
+  },
+  "experienceHeading": {
+    "eyebrow": "EXPERIENCE",
+    "title": "Sample work",
+    "description": "One fictional entry keeps the layout representative."
+  },
+  "experiences": [{
+    "period": "2024 - Present",
+    "organization": "Example Studio",
+    "title": "Developer",
+    "type": "Demo",
+    "summary": ["Built sample systems and wrote documentation for this public fixture."],
+    "tags": ["Writing", "Software"]
+  }],
+  "capabilitiesHeading": {
+    "eyebrow": "CAPABILITIES",
+    "title": "Sample capabilities",
+    "description": "Generic skill groups for visual validation."
+  },
+  "capabilities": [{
+    "icon": "workflow",
+    "title": "System design",
+    "description": "Planning small systems from ideas to working software.",
+    "skills": ["TypeScript", "APIs", "Documentation"]
+  }]
+}
