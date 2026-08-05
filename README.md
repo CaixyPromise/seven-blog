@@ -1,6 +1,6 @@
-# CaixyPromise Blog
+# Seven Blog
 
-The public application source for CaixyPromise Blog. It includes the Next.js frontend, the Node interaction backend, deployment templates, schemas, and a fully synthetic content fixture.
+The public application source for Seven Blog. It includes the Next.js frontend, the Node interaction backend, deployment templates, schemas, and a fully synthetic content fixture.
 
 ## Local development
 
@@ -61,3 +61,17 @@ Production deployments should mount a release store and use
 revalidation secrets, SQLite data, private content, and deployment credentials
 are runtime mounts or environment files and are intentionally excluded from
 the image build contexts.
+
+## Release images
+
+Documentation and ordinary source commits do not publish container images.
+Create a `release-*` tag when the source and deployment configuration are ready:
+
+```bash
+git tag release-v1.0.0
+git push origin release-v1.0.0
+```
+
+The release workflow publishes both frontend and backend images to GHCR and
+updates the `latest` tag. `workflow_dispatch` remains available for an explicit
+manual release from a selected ref.
