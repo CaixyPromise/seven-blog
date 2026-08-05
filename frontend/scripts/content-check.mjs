@@ -50,11 +50,25 @@ async function checkMarkdownCollection(collection) {
     const slug = parsed.data.slug ?? fileName.replace(/\.md$/, "")
     const content = parsed.content
 
-    checkFrontmatter(parsed.data, filePath, collection)
+    checkFrontmatter(normalizeFrontmatterDates(parsed.data), filePath, collection)
     checkDuplicateSlug(slug, filePath, collection)
     checkDuplicateHeadings(content, filePath)
     await checkImages(content, filePath, collection, slug)
   }
+}
+
+function normalizeFrontmatterDates(value) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    return value
+  }
+
+  const frontmatter = { ...value }
+  for (const field of ["date", "updatedAt"]) {
+    if (frontmatter[field] instanceof Date) {
+      frontmatter[field] = frontmatter[field].toISOString().slice(0, 10)
+    }
+  }
+  return frontmatter
 }
 
 function checkFrontmatter(frontmatter, filePath, collection) {

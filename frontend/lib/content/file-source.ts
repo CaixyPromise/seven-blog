@@ -328,13 +328,29 @@ async function readMarkdownCollection<TFrontmatter, TRecord>(
       try {
         const raw = await fs.readFile(fullPath, "utf8")
         const parsed = matter(raw)
-        const frontmatter = parseWithSchema(parsed.data, schema, fullPath)
+        const frontmatter = parseWithSchema(normalizeFrontmatterDates(parsed.data), schema, fullPath)
         return mapRecord(frontmatter, parsed.content.trim())
       } catch (error) {
         throw withPath(error, fullPath)
       }
     }),
   )
+}
+
+function normalizeFrontmatterDates(value: unknown): unknown {
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    return value
+  }
+
+  const frontmatter = { ...(value as Record<string, unknown>) }
+  for (const field of ["date", "updatedAt"]) {
+    const candidate = frontmatter[field]
+    if (candidate instanceof Date) {
+      frontmatter[field] = candidate.toISOString().slice(0, 10)
+    }
+  }
+
+  return frontmatter
 }
 
 function parseWithSchema<T>(value: unknown, schema: z.ZodType<T>, filePath: string): T {

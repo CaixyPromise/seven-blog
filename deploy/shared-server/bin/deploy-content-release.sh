@@ -20,6 +20,7 @@ validate_commit "$commit"
 [[ -f "${CONTENT_KNOWN_HOSTS:?CONTENT_KNOWN_HOSTS is required}" ]] || fail "content known_hosts is missing"
 
 mkdir -p "$CONTENT_ROOT/releases"
+chmod 755 "$CONTENT_ROOT" "$CONTENT_ROOT/releases"
 exec 9>"$STATE_ROOT/content-deploy.lock"
 flock -n 9 || fail "another content deployment is running"
 
@@ -56,6 +57,10 @@ if [[ ! -d "$release_path" ]]; then
 
   rm -rf "$staging_path/.git"
   mv "$staging_path" "$release_path"
+  # The checkout may be created with the deploy user's restrictive umask.
+  # The frontend reads the external volume as an unprivileged container user,
+  # so expose content as read-only to other users without granting write access.
+  chmod -R u+rwX,go+rX "$release_path"
   trap - EXIT
 fi
 
