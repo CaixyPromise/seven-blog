@@ -274,10 +274,10 @@ async function readLocalizedConfigJson<T>(relativePath: string, locale: Locale |
 }
 
 async function readConfigJson<T>(relativePath: string, schema: z.ZodType<T>): Promise<T> {
-  return readJson(await resolveConfigPath(relativePath), schema)
+  return readJson(await resolveContentConfigPath(relativePath), schema)
 }
 
-async function resolveConfigPath(relativePath: string): Promise<string> {
+export async function resolveContentConfigPath(relativePath: string): Promise<string> {
   const extension = path.extname(relativePath)
   const base = relativePath.slice(0, -extension.length)
   const environment = getContentEnvironment()

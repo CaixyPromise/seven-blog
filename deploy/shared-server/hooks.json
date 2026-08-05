@@ -1,0 +1,53 @@
+[
+  {
+    "id": "seven-blog-app-release",
+    "execute-command": "/app/caixypromise/seven-blog/service/bin/deploy-app-release.sh",
+    "command-working-directory": "/app/caixypromise/seven-blog/service",
+    "response-message": "seven-blog application deployment completed",
+    "include-command-output-in-response": true,
+    "pass-environment-to-command": [
+      {
+        "source": "header",
+        "name": "Authorization",
+        "envname": "REQUEST_AUTHORIZATION"
+      },
+      {
+        "source": "header",
+        "name": "X-Request-Id",
+        "envname": "REQUEST_ID"
+      }
+    ],
+    "pass-arguments-to-command": [
+      { "source": "payload", "name": "repository" },
+      { "source": "payload", "name": "commit" },
+      { "source": "payload", "name": "frontend_image" },
+      { "source": "payload", "name": "backend_image" },
+      { "source": "payload", "name": "frontend_digest" },
+      { "source": "payload", "name": "backend_digest" }
+    ]
+  },
+  {
+    "id": "seven-blog-content-release",
+    "execute-command": "/app/caixypromise/seven-blog/service/bin/deploy-content-release.sh",
+    "command-working-directory": "/app/caixypromise/seven-blog/service",
+    "response-message": "seven-blog content deployment completed",
+    "include-command-output-in-response": true,
+    "pass-environment-to-command": [
+      {
+        "source": "header",
+        "name": "Authorization",
+        "envname": "REQUEST_AUTHORIZATION"
+      },
+      {
+        "source": "header",
+        "name": "X-Request-Id",
+        "envname": "REQUEST_ID"
+      }
+    ],
+    "pass-arguments-to-command": [
+      { "source": "payload", "name": "repository" },
+      { "source": "payload", "name": "commit" },
+      { "source": "payload", "name": "ref" }
+    ]
+  }
+]

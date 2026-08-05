@@ -4,6 +4,6 @@ export function GET() {
   return createOgImage({
     eyebrow: "CaixyPromise Notes",
     title: "Casual notes, fragments, observations, and reflections.",
-    footer: "eindev.ir/notes",
+    footer: "example.com/notes",
   })
 }

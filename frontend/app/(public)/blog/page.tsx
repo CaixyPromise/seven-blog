@@ -5,7 +5,7 @@ import { listPopularTags, listPostCategories, listPosts } from "@/lib/content/po
 import { getMessages, parseLocale } from "@/lib/i18n";
 import type { Metadata } from "next";
 
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://eindev.ir';
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://example.com';
 
 interface BlogPageProps {
   searchParams?: Promise<Record<string, string | string[] | undefined>>

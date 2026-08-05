@@ -2,22 +2,18 @@ name: seven-blog
 
 services:
   frontend:
-    image: ${FRONTEND_IMAGE:-ghcr.io/caixypromise/seven-blog-frontend:latest}
-    pull_policy: missing
-    build:
-      context: ./frontend
+    image: "${FRONTEND_IMAGE}@${FRONTEND_DIGEST}"
     env_file:
-      - path: ./deploy/frontend.env
-        required: false
+      - /app/caixypromise/seven-blog/service/frontend.env
     environment:
       NODE_ENV: production
       CONTENT_SOURCE: file
-      CONTENT_ROOT: ${CONTENT_ROOT:-/content-store}
-      CONTENT_ENV: ${CONTENT_ENV:-dev}
+      CONTENT_ROOT: /content-store/current
+      CONTENT_ENV: prod
     ports:
-      - "127.0.0.1:3000:3000"
+      - "127.0.0.1:3100:3000"
     volumes:
-      - ${CONTENT_STORE_HOST_PATH:-./frontend/content-demo}:/content-store:ro
+      - /app/caixypromise/seven-blog/content:/content-store:ro
     depends_on:
       backend:
         condition: service_healthy
@@ -30,20 +26,16 @@ services:
     restart: unless-stopped
 
   backend:
-    image: ${BACKEND_IMAGE:-ghcr.io/caixypromise/seven-blog-backend:latest}
-    pull_policy: missing
-    build:
-      context: ./backend
+    image: "${BACKEND_IMAGE}@${BACKEND_DIGEST}"
     env_file:
-      - path: ./deploy/backend.env
-        required: false
+      - /app/caixypromise/seven-blog/service/backend.env
     environment:
       NODE_ENV: production
       DATABASE_PATH: /app/data/blog.sqlite
     ports:
-      - "127.0.0.1:4000:4000"
+      - "127.0.0.1:4100:4000"
     volumes:
-      - ${INTERACTION_DATA_HOST_PATH:-./data}:/app/data
+      - /app/caixypromise/seven-blog/service/data:/app/data
     healthcheck:
       test: ["CMD-SHELL", "node -e \"fetch('http://127.0.0.1:4000/health').then((r) => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))\""]
       interval: 30s

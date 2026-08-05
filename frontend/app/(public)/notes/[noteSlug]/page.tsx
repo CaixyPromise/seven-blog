@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: NotePageProps): Promise<Metad
     return { title: "Note Not Found" }
   }
 
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://eindev.ir"
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://example.com"
   return {
     title: note.title,
     description: note.excerpt,
@@ -50,7 +50,7 @@ export default async function NotePage({ params, searchParams }: NotePageProps) 
   }
 
   const copy = getMessages(locale).notes
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://eindev.ir"
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://example.com"
   const structuredData = generateNoteStructuredData(note, baseUrl)
 
   return (

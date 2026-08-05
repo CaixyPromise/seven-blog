@@ -602,7 +602,7 @@ Minimum backend environment for successful email notification:
 SMTP_HOST=smtp.example.com
 SMTP_PORT=587
 SMTP_USER=example
-SMTP_PASS=secret
+SMTP_PASS=<smtp-password>
 SMTP_FROM=blog@example.com
 CONTACT_NOTIFY_TO=owner@example.com
 ```

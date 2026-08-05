@@ -1,31 +1,33 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Geist, Geist_Mono, Space_Grotesk } from "next/font/google"
+import localFont from "next/font/local"
 import { Analytics } from "@vercel/analytics/next"
 import { Toaster } from "sonner"
 import { ThemeProvider } from "@/components/theme-provider"
 import "./globals.css"
 import "katex/dist/katex.min.css"
 
-// Configure fonts with proper options
-const geist = Geist({
-  subsets: ["latin"],
-  variable: '--font-geist',
-  display: 'swap',
+const geist = localFont({
+  src: "./fonts/geist-latin.woff2",
+  weight: "100 900",
+  variable: "--font-geist",
+  display: "swap",
 })
-const geistMono = Geist_Mono({
-  subsets: ["latin"],
-  variable: '--font-geist-mono',
-  display: 'swap',
+const geistMono = localFont({
+  src: "./fonts/geist-mono-latin.woff2",
+  weight: "100 900",
+  variable: "--font-geist-mono",
+  display: "swap",
 })
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  variable: '--font-space-grotesk',
-  display: 'swap',
+const spaceGrotesk = localFont({
+  src: "./fonts/space-grotesk-latin.woff2",
+  weight: "300 700",
+  variable: "--font-space-grotesk",
+  display: "swap",
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://eindev.ir'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://example.com'),
   title: {
     default: "CaixyPromise Blog",
     template: "%s | CaixyPromise",

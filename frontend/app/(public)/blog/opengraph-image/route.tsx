@@ -4,6 +4,6 @@ export function GET() {
   return createOgImage({
     eyebrow: "CaixyPromise Blog",
     title: "Technical articles about AI Agents, LLM applications, and backend systems.",
-    footer: "eindev.ir/blog",
+    footer: "example.com/blog",
   })
 }

@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next'
 import { listPosts } from '@/lib/content/posts'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://eindev.ir'
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://example.com'
   const blogPosts = await listPosts()
 
   // Static routes

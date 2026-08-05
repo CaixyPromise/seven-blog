@@ -21,7 +21,7 @@ export function generateBlogPostStructuredData(post: BlogPost, url: string) {
     publisher: {
       '@type': 'Person',
       name: 'Maverick / CaixyPromise',
-      url: 'https://eindev.ir',
+      url: 'https://example.com',
     },
     mainEntityOfPage: {
       '@type': 'WebPage',

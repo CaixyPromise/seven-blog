@@ -22,7 +22,7 @@ workbench/items.prod.json
 On the server, keep content releases outside the application checkout:
 
 ```txt
-/srv/caixypromise-content/
+/srv/seven-blog-content/
   releases/<commit-sha>/
   current -> releases/<commit-sha>
   previous -> releases/<previous-sha>
@@ -31,8 +31,8 @@ On the server, keep content releases outside the application checkout:
 Before the first deployment, create the content store and persistent SQLite directory with ownership matching the containers:
 
 ```bash
-sudo install -d -o 1001 -g 1001 /srv/caixypromise-content/releases
-sudo install -d -o 1001 -g 1001 /srv/caixypromise-blog/data
+sudo install -d -o 1001 -g 1001 /srv/seven-blog-content/releases
+sudo install -d -o 1001 -g 1001 /srv/seven-blog/data
 ```
 
 The content repository root must contain the existing content shape:
@@ -61,7 +61,7 @@ The example workflow at `deploy/content-publish.yml.example` belongs in the priv
 
 1. Check out the content repository and the frontend runtime repository.
 2. Run `CONTENT_ROOT=$GITHUB_WORKSPACE pnpm --dir site-runtime/frontend content:check`.
-3. Upload content to `/srv/caixypromise-content/releases/<commit-sha>/`.
+3. Upload content to `/srv/seven-blog-content/releases/<commit-sha>/`.
 4. Atomically update `current` with `activate-content-release.sh`.
 5. Run `revalidate-content-diff.mjs` against `CONTENT_GIT_BASE` and `CONTENT_GIT_HEAD`.
 6. Roll back `current` to `previous` if revalidation fails.

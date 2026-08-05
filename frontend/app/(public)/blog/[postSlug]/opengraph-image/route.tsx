@@ -13,6 +13,6 @@ export async function GET(_request: Request, { params }: BlogPostOpenGraphImageP
     eyebrow: post ? `CaixyPromise Blog · ${post.category}` : "CaixyPromise Blog",
     title: post?.title ?? "Post Not Found",
     subtitle: post?.excerpt ?? "This article is not available.",
-    footer: `eindev.ir/blog/${postSlug}`,
+    footer: `example.com/blog/${postSlug}`,
   })
 }

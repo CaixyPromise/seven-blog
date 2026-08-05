@@ -14,7 +14,7 @@ export async function GET(_request: Request, { params }: BlogPostMarkdownProps) 
     notFound()
   }
 
-  const baseUrl = (process.env.NEXT_PUBLIC_SITE_URL || "https://eindev.ir").replace(/\/$/, "")
+  const baseUrl = (process.env.NEXT_PUBLIC_SITE_URL || "https://example.com").replace(/\/$/, "")
   const postUrl = `${baseUrl}/blog/${post.slug}`
   const assetBaseUrl = `${baseUrl}/content-assets/posts/${post.slug}`
   const content = absolutizeMarkdownAssetLinks(post.content.trim(), postUrl, assetBaseUrl)

@@ -36,9 +36,9 @@ jobs:
           printf '%s' "$CONTENT_DEPLOY_SSH_KEY" > ~/.ssh/content-deploy
           export GIT_SSH_COMMAND="ssh -i ~/.ssh/content-deploy -o StrictHostKeyChecking=accept-new"
           release="${GITHUB_SHA}"
-          ssh "$CONTENT_DEPLOY_TARGET" "mkdir -p /srv/caixypromise-content/releases/$release"
-          rsync -a --delete --exclude=.git --exclude=site-runtime ./ "$CONTENT_DEPLOY_TARGET:/srv/caixypromise-content/releases/$release/"
-          ssh "$CONTENT_DEPLOY_TARGET" "CONTENT_STORE_ROOT=/srv/caixypromise-content bash -s -- $release" < site-runtime/frontend/deploy/activate-content-release.sh
+          ssh "$CONTENT_DEPLOY_TARGET" "mkdir -p /srv/seven-blog-content/releases/$release"
+          rsync -a --delete --exclude=.git --exclude=site-runtime ./ "$CONTENT_DEPLOY_TARGET:/srv/seven-blog-content/releases/$release/"
+          ssh "$CONTENT_DEPLOY_TARGET" "CONTENT_STORE_ROOT=/srv/seven-blog-content bash -s -- $release" < site-runtime/frontend/deploy/activate-content-release.sh
           echo "release=$release" >> "$GITHUB_OUTPUT"
       - name: Revalidate published content
         env:
@@ -56,4 +56,4 @@ jobs:
           install -m 600 /dev/null ~/.ssh/content-deploy
           printf '%s' "$CONTENT_DEPLOY_SSH_KEY" > ~/.ssh/content-deploy
           export GIT_SSH_COMMAND="ssh -i ~/.ssh/content-deploy -o StrictHostKeyChecking=accept-new"
-          ssh "$CONTENT_DEPLOY_TARGET" "CONTENT_STORE_ROOT=/srv/caixypromise-content bash -s" < site-runtime/frontend/deploy/rollback-content-release.sh
+          ssh "$CONTENT_DEPLOY_TARGET" "CONTENT_STORE_ROOT=/srv/seven-blog-content bash -s" < site-runtime/frontend/deploy/rollback-content-release.sh

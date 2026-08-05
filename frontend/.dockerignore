@@ -9,3 +9,8 @@ output
 *.log
 .env*
 !*.env.example
+*.db
+*.key
+*.pem
+*.sqlite
+secrets

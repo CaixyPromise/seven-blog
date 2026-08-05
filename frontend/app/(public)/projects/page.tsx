@@ -9,7 +9,7 @@ import {
 import type { Metadata } from "next";
 import { getMessages, parseLocale } from "@/lib/i18n";
 
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://eindev.ir';
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://example.com';
 
 interface ProjectsPageProps {
   searchParams: Promise<{

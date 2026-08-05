@@ -18,7 +18,7 @@ type HomePageProps = {
 
 export default async function Home({ searchParams }: HomePageProps) {
   const locale = parseLocale((await searchParams)?.lang)
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://eindev.ir'
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://example.com'
   const [homeContent, profile, notes, workbenchItems] = await Promise.all([
     getHomePageContent(locale),
     getProfileContent(locale),

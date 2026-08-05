@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     };
   }
 
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://eindev.ir';
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://example.com';
   const postUrl = `${baseUrl}/blog/${post.slug}`;
   const ogImageUrl = `${baseUrl}/blog/${post.slug}/opengraph-image`;
 
@@ -71,7 +71,7 @@ export default async function BlogPostPage({ params, searchParams }: BlogPostPag
     notFound();
   }
 
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://eindev.ir';
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://example.com';
   const structuredData = generateBlogPostStructuredData(post, baseUrl);
   const locale = parseLocale(resolvedSearchParams?.lang)
   const copy = getMessages(locale).blog;

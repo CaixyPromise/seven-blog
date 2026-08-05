@@ -3,7 +3,7 @@ import { listNotes } from "@/lib/content/notes";
 import { getMessages, parseLocale } from "@/lib/i18n";
 import type { Metadata } from "next";
 
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://eindev.ir';
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://example.com';
 
 type NotesPageProps = {
   searchParams?: Promise<Record<string, string | string[] | undefined>>

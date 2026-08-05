@@ -221,7 +221,7 @@ ${note.excerpt}
 }
 
 function getBaseUrl(): string {
-  return (process.env.NEXT_PUBLIC_SITE_URL || "https://eindev.ir").replace(/\/$/, "")
+  return (process.env.NEXT_PUBLIC_SITE_URL || "https://example.com").replace(/\/$/, "")
 }
 
 function compactMarkdown(markdown: string): string {

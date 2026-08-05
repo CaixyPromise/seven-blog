@@ -2,7 +2,7 @@
 set -euo pipefail
 
 release_id="${1:?release id is required}"
-store_root="${CONTENT_STORE_ROOT:-/srv/caixypromise-content}"
+store_root="${CONTENT_STORE_ROOT:-/srv/seven-blog-content}"
 release_path="$store_root/releases/$release_id"
 current_link="$store_root/current"
 previous_link="$store_root/previous"

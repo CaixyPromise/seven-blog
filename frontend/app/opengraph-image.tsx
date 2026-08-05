@@ -32,7 +32,7 @@ export default function Image() {
             Notes on AI Agents, LLM applications, backend systems, and tools.
           </div>
         </div>
-        <div style={{ color: "#9ca3af", fontSize: 26 }}>eindev.ir</div>
+        <div style={{ color: "#9ca3af", fontSize: 26 }}>example.com</div>
       </div>
     ),
     size,

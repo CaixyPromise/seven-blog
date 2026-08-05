@@ -55,7 +55,7 @@ Add to Vercel:
 
 1. **Add domain in Vercel**:
    - Project Settings → Domains
-   - Add your domain (e.g., `eindev.ir`)
+   - Add your domain (e.g., `example.com`)
 
 2. **Update DNS**:
    - Add CNAME record: `www` → `cname.vercel-dns.com`
