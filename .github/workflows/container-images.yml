@@ -48,7 +48,7 @@ jobs:
         with:
           images: ghcr.io/${{ github.repository_owner }}/${{ matrix.image }}
           tags: |
-            type=raw,value=latest,enable={{is_tag}}
+            type=raw,value=latest,enable=${{ startsWith(github.ref_name, 'release-') }}
             type=sha,format=short
             type=ref,event=tag
 
