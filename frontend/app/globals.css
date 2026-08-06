@@ -133,6 +133,21 @@
   }
 }
 
+.brand-mark-shell {
+  background: var(--foreground);
+  border: 1px solid color-mix(in oklch, var(--primary) 68%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in oklch, var(--primary) 12%, transparent),
+    0 6px 16px color-mix(in oklch, var(--primary) 14%, transparent);
+}
+
+.dark .brand-mark-shell {
+  background: oklch(0.075 0.025 185);
+  border-color: color-mix(in oklch, var(--primary) 82%, white 8%);
+  box-shadow: 0 0 0 1px color-mix(in oklch, var(--primary) 20%, transparent),
+    0 0 20px color-mix(in oklch, var(--primary) 22%, transparent),
+    inset 0 0 0 1px oklch(1 0 0 / 0.08);
+}
+
 /* Enhanced cursor glow with smoother gradient */
 .cursor-glow {
   pointer-events: none;

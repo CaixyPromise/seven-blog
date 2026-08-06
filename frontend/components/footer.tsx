@@ -7,7 +7,13 @@ import type { ProfileContent } from "@/lib/content/types"
 
 const socialIconMap = { github: Github, email: Mail }
 
-export function Footer({ socialLinks = [] }: { socialLinks?: ProfileContent["socialLinks"] }) {
+export function Footer({
+  brandName = "CaixyPromise",
+  socialLinks = [],
+}: {
+  brandName?: ProfileContent["brandName"]
+  socialLinks?: ProfileContent["socialLinks"]
+}) {
   const locale = parseLocale(useSearchParams().get("lang"))
   const copy = getMessages(locale)
   const footerSocialLinks = socialLinks.filter((link) => link.visibleInFooter && link.platform in socialIconMap)
@@ -108,7 +114,7 @@ export function Footer({ socialLinks = [] }: { socialLinks?: ProfileContent["soc
           </div>
 
           <p className="font-mono text-xs text-muted-foreground text-center sm:text-right">
-            © {new Date().getFullYear()} CaixyPromise — {copy.footer.rights}
+            © {new Date().getFullYear()} {brandName} — {copy.footer.rights}
           </p>
         </div>
       </div>

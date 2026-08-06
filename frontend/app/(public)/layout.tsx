@@ -14,9 +14,9 @@ export default async function PublicLayout({
     <main className="relative min-h-screen overflow-x-clip scanlines">
       <CursorGlow />
       <div className="relative z-10">
-        <Header socialLinks={profile.socialLinks} />
+        <Header brandName={profile.brandName} socialLinks={profile.socialLinks} />
         {children}
-        <Footer socialLinks={profile.socialLinks} />
+        <Footer brandName={profile.brandName} socialLinks={profile.socialLinks} />
       </div>
     </main>
   );

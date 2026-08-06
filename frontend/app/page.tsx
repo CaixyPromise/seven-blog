@@ -41,12 +41,12 @@ export default async function Home({ searchParams }: HomePageProps) {
       <main className="relative min-h-screen overflow-hidden scanlines">
         <CursorGlow />
         <div className="relative z-10">
-          <Header socialLinks={profile.socialLinks} />
+          <Header brandName={profile.brandName} socialLinks={profile.socialLinks} />
           <HeroSection content={homeContent.hero} />
           <ProjectsGrid locale={locale} />
           <LabNotes notes={notes.slice(0, 4)} locale={locale} />
           <Workbench items={workbenchItems.slice(0, 4)} locale={locale} />
-          <Footer socialLinks={profile.socialLinks} />
+          <Footer brandName={profile.brandName} socialLinks={profile.socialLinks} />
         </div>
       </main>
     </>

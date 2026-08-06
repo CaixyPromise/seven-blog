@@ -20,7 +20,24 @@ const navItems = [
 
 const socialIconMap = { github: Github, email: Mail }
 
-export function Header({ socialLinks = [] }: { socialLinks?: ProfileContent["socialLinks"] }) {
+function getBrandParts(brandName: string) {
+  const normalized = brandName.trim() || "CaixyPromise"
+
+  // Keep camel-case brands visually balanced while allowing any configured name.
+  if (/^[A-Za-z]+$/.test(normalized) && /[a-z][A-Z]/.test(normalized)) {
+    return normalized.split(/(?=[A-Z])/)
+  }
+
+  return [normalized]
+}
+
+export function Header({
+  brandName = "CaixyPromise",
+  socialLinks = [],
+}: {
+  brandName?: ProfileContent["brandName"]
+  socialLinks?: ProfileContent["socialLinks"]
+}) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
@@ -31,6 +48,7 @@ export function Header({ socialLinks = [] }: { socialLinks?: ProfileContent["soc
   const nextLocale = locale === "zh" ? "en" : "zh"
   const languageHref = nextLocale === "zh" ? pathname : `${pathname}?lang=en`
   const headerSocialLinks = socialLinks.filter((link) => link.visibleInHeader && link.platform in socialIconMap)
+  const brandParts = getBrandParts(brandName)
 
   const isActive = (href: string) => {
     if (href === "/") return pathname === "/"
@@ -55,14 +73,18 @@ export function Header({ socialLinks = [] }: { socialLinks?: ProfileContent["soc
       <div className="mx-auto max-w-7xl px-4 sm:px-6 py-4">
         <nav className="flex items-center justify-between">
           <Link href="/" className="group flex items-center gap-3">
-            <div className="relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-lg border border-primary/50 bg-foreground p-1.5 transition-all duration-400 group-hover:scale-105 group-hover:border-primary group-hover:shadow-lg group-hover:shadow-primary/25">
-              <img src="/brand-mark.png" alt="CaixyPromise" className="h-full w-full object-contain" />
+            <div className="brand-mark-shell relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-lg p-1.5 transition-all duration-400 group-hover:scale-105 group-hover:border-primary group-hover:shadow-lg group-hover:shadow-primary/25">
+              <img src="/brand-mark.png" alt={`${brandName} logo`} className="relative z-10 h-full w-full object-contain" />
             </div>
-            <span className="font-mono text-sm tracking-tight">
-              CAIXY
-              <span className="bg-gradient-to-l from-primary/50 to-accent bg-clip-text text-transparent font-semibold">
-                PROMISE
-              </span>
+            <span className="font-mono text-sm tracking-tight" aria-label={brandName}>
+              {brandParts.map((part, index) => (
+                <span
+                  key={`${part}-${index}`}
+                  className={index === 0 ? "text-foreground" : "bg-gradient-to-l from-primary/50 to-accent bg-clip-text text-transparent font-semibold"}
+                >
+                  {part.toUpperCase()}
+                </span>
+              ))}
             </span>
           </Link>
 
