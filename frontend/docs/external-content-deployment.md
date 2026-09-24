@@ -51,9 +51,10 @@ Compose mounts the parent directory read-only at `/content-store`; the frontend 
 CONTENT_SOURCE=file
 CONTENT_ROOT=/content-store/current
 CONTENT_ENV=prod
+IMAGE_ALLOWED_HOSTS=cdn.example.com,images.example.net
 ```
 
-Create `deploy/frontend.env` and `deploy/backend.env` from their `.example` files before starting Compose. `NEXT_PUBLIC_SITE_URL` and `BACKEND_BASE_URL` must use the public HTTPS domain.
+Create `deploy/frontend.env` and `deploy/backend.env` from their `.example` files before starting Compose. Set `IMAGE_ALLOWED_HOSTS` there for any remote image CDN used by the private content repository. `NEXT_PUBLIC_SITE_URL` and `BACKEND_BASE_URL` must use the public HTTPS domain.
 
 ## Content publishing
 

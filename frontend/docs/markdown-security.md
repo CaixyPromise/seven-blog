@@ -59,15 +59,26 @@ Local images are preferred.
 
 - Absolute local paths resolve from `public/`.
 - Relative paths like `./images/demo.svg` resolve through `/content-assets/posts/:slug/...` for blog posts and `/content-assets/notes/:slug/...` for notes.
-- Remote image hosts are allowlisted in `MarkdownImage`.
+- Remote image hosts are supplied by the runtime `IMAGE_ALLOWED_HOSTS` environment variable as a comma-separated hostname list. The public repository does not hard-code deployment-specific CDN domains.
 - Missing `alt` text is shown in the page and reported by `pnpm content:check`.
+
+Example private deployment configuration:
+
+```env
+IMAGE_ALLOWED_HOSTS=cdn.example.com,images.example.net
+```
+
+The frontend reads this variable on the server and passes the normalized host
+list to the image component. This means changing the allowlist does not require
+putting a personal CDN domain in the open-source renderer. For compatibility,
+`NEXT_PUBLIC_IMAGE_ALLOWED_HOSTS` is still accepted as a legacy fallback.
 
 ## Required Checks
 
 Run before publishing content:
 
 ```bash
-pnpm content:check
+IMAGE_ALLOWED_HOSTS=cdn.example.com,images.example.net pnpm content:check
 pnpm exec tsc --noEmit
 ```
 

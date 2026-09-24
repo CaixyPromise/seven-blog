@@ -13,6 +13,7 @@ import { markdownSanitizeSchema } from "@/components/public/blog/markdown-saniti
 import { MathCopyEnhancer } from "@/components/public/blog/math-copy-enhancer"
 import { MermaidBlock } from "@/components/public/blog/mermaid-block"
 import { TableBlock } from "@/components/public/blog/table-block"
+import { getConfiguredImageHosts } from "@/lib/markdown-image-policy"
 import {
   createCodeMetaResolver,
   createHeadingIdFactory,
@@ -74,6 +75,7 @@ export function MarkdownContent({ content, slug, contentKind = "posts", classNam
   const getH1Id = createHeadingIdFactory()
   const resolveCodeMeta = createCodeMetaResolver(normalizedContent)
   const gallery = extractMarkdownImageSources(normalizedContent, slug, contentKind)
+  const allowedImageHosts = getConfiguredImageHosts()
   const rootId = `markdown-content-${slug ?? hashContent(normalizedContent)}`
 
   return (
@@ -172,6 +174,7 @@ export function MarkdownContent({ content, slug, contentKind = "posts", classNam
                 src={resolvedSrc}
                 alt={alt ?? ""}
                 title={title}
+                allowedHosts={allowedImageHosts}
                 gallery={gallery}
                 initialIndex={initialIndex >= 0 ? initialIndex : 0}
               />

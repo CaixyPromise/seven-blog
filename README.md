@@ -60,7 +60,12 @@ Production deployments should mount a release store and use
 `CONTENT_ROOT=/content-store/current` with `CONTENT_ENV=prod`. SMTP settings,
 revalidation secrets, SQLite data, private content, and deployment credentials
 are runtime mounts or environment files and are intentionally excluded from
-the image build contexts.
+the image build contexts. Remote Markdown image domains are configured in the
+private frontend env file with `IMAGE_ALLOWED_HOSTS`, for example:
+
+```env
+IMAGE_ALLOWED_HOSTS=cdn.example.com,images.example.net
+```
 
 ## Release images
 

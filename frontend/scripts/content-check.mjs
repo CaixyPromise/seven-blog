@@ -6,16 +6,9 @@ const root = process.cwd()
 const contentRoot = path.resolve(process.env.CONTENT_ROOT ?? path.join(root, "content-demo"))
 const contentEnvironment = normalizeContentEnvironment(process.env.CONTENT_ENV ?? (process.env.NODE_ENV === "production" ? "prod" : "dev"))
 const publicRoot = path.resolve(process.env.PUBLIC_ROOT ?? path.join(root, "public"))
-const allowedRemoteHosts = new Set([
-  "github.com",
-  "raw.githubusercontent.com",
-  "user-images.githubusercontent.com",
-  "images.unsplash.com",
-  ...(process.env.NEXT_PUBLIC_IMAGE_ALLOWED_HOSTS ?? "")
-    .split(",")
-    .map((host) => host.trim())
-    .filter(Boolean),
-])
+const allowedRemoteHosts = new Set(
+  parseImageHosts(process.env.IMAGE_ALLOWED_HOSTS ?? process.env.NEXT_PUBLIC_IMAGE_ALLOWED_HOSTS ?? ""),
+)
 
 const issues = []
 const slugsByCollection = new Map()
@@ -153,6 +146,30 @@ function normalizeContentEnvironment(value) {
     throw new Error(`Invalid CONTENT_ENV: ${value}`)
   }
   return environment
+}
+
+function parseImageHosts(value) {
+  return Array.from(
+    new Set(
+      value
+        .split(",")
+        .map((host) => normalizeImageHost(host))
+        .filter(Boolean),
+    ),
+  )
+}
+
+function normalizeImageHost(value) {
+  const trimmed = value.trim()
+  if (!trimmed) {
+    return null
+  }
+
+  try {
+    return new URL(trimmed.includes("://") ? trimmed : `https://${trimmed}`).hostname.toLowerCase()
+  } catch {
+    return null
+  }
 }
 
 function checkDuplicateHeadings(content, filePath) {

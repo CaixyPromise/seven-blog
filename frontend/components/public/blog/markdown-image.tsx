@@ -8,6 +8,7 @@ interface MarkdownImageProps {
   src?: string
   alt?: string
   title?: string
+  allowedHosts?: string[]
   gallery?: string[]
   initialIndex?: number
 }
@@ -19,7 +20,7 @@ interface ImageMeta {
   height?: number
 }
 
-export function MarkdownImage({ src, alt = "", title, gallery = [], initialIndex = 0 }: MarkdownImageProps) {
+export function MarkdownImage({ src, alt = "", title, allowedHosts = [], gallery = [], initialIndex = 0 }: MarkdownImageProps) {
   const [error, setError] = useState(false)
   const [previewOpen, setPreviewOpen] = useState(false)
   const [zoom, setZoom] = useState(1)
@@ -27,7 +28,7 @@ export function MarkdownImage({ src, alt = "", title, gallery = [], initialIndex
   const imageMeta = parseImageTitle(title)
   const activeSrc = gallery[activeIndex] ?? src
   const hasGallery = gallery.length > 1
-  const allowedRemote = isAllowedImageSrc(src)
+  const allowedRemote = isAllowedImageSrc(src, allowedHosts)
 
   useEffect(() => {
     if (!previewOpen) {
@@ -247,25 +248,14 @@ export function MarkdownImage({ src, alt = "", title, gallery = [], initialIndex
   )
 }
 
-function isAllowedImageSrc(src?: string) {
+function isAllowedImageSrc(src: string | undefined, allowedHosts: string[]) {
   if (!src || src.startsWith("/") || src.startsWith("./") || src.startsWith("../") || src.startsWith("data:image/")) {
     return true
   }
 
   try {
     const url = new URL(src)
-    const configuredHosts = (process.env.NEXT_PUBLIC_IMAGE_ALLOWED_HOSTS ?? "")
-      .split(",")
-      .map((host) => host.trim())
-      .filter(Boolean)
-    const allowedHosts = new Set([
-      "github.com",
-      "raw.githubusercontent.com",
-      "user-images.githubusercontent.com",
-      "images.unsplash.com",
-      ...configuredHosts,
-    ])
-    return allowedHosts.has(url.hostname)
+    return allowedHosts.includes(url.hostname.toLowerCase())
   } catch {
     return true
   }
