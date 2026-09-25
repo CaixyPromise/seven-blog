@@ -509,6 +509,7 @@ interface BlogPost {
   slug: string
   title: string
   excerpt: string
+  thumbnail?: string
   content: string
   date: string
   updatedAt?: string
@@ -589,6 +590,7 @@ interface Note {
   slug?: string
   title: string
   excerpt: string
+  thumbnail?: string
   content: string
   date: string
   updatedAt?: string

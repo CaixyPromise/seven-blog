@@ -6,6 +6,7 @@ import { getMessages, parseLocale, withLocaleHref } from "@/lib/i18n"
 import { ArticlePageContent } from "@/components/public/blog/article-page-content"
 import { generateNoteStructuredData } from "@/lib/structured-data"
 import { getSiteUrl } from "@/lib/site-url"
+import { getArticleThumbnailUrl } from "@/lib/content/article-thumbnail"
 
 export const dynamicParams = true
 
@@ -23,7 +24,7 @@ export async function generateMetadata({ params }: NotePageProps): Promise<Metad
 
   const baseUrl = getSiteUrl()
   const noteUrl = `${baseUrl}/notes/${note.slug ?? noteSlug}`
-  const ogImageUrl = `${noteUrl}/opengraph-image`
+  const ogImageUrl = getArticleThumbnailUrl(note.thumbnail, "notes", note.slug ?? noteSlug)
   return {
     title: note.title,
     description: note.excerpt,
@@ -35,8 +36,6 @@ export async function generateMetadata({ params }: NotePageProps): Promise<Metad
       images: [
         {
           url: ogImageUrl,
-          width: 1200,
-          height: 630,
           alt: note.title,
         },
       ],

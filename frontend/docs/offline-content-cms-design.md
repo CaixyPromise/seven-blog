@@ -630,11 +630,14 @@ tags:
 featured: false
 draft: false
 excerpt: Short listing summary.
+thumbnail: ./images/cover.png
 author:
   name: Ehsan Ghaffar
   avatar: /developer-portrait.png
   role: Software Engineer
 ```
+
+`thumbnail` is optional. It accepts a public site path, a path relative to the article's content directory, or an HTTPS CDN URL. If omitted, Blog and Note social metadata use the platform logo (`/brand-mark.png`). Remote thumbnail hosts must be included in `IMAGE_ALLOWED_HOSTS` so `pnpm content:check` accepts them.
 
 Add or edit structured content in JSON:
 

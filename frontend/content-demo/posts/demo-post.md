@@ -3,6 +3,7 @@ id: 1
 slug: demo-post
 title: A Demo Post
 excerpt: A fictional post that demonstrates portable Markdown content.
+thumbnail: ./cover.svg
 date: 2026-08-04
 readTime: 2 min
 category: Demo

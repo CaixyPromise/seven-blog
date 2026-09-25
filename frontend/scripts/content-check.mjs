@@ -46,6 +46,7 @@ async function checkMarkdownCollection(collection) {
     checkFrontmatter(normalizeFrontmatterDates(parsed.data), filePath, collection)
     checkDuplicateSlug(slug, filePath, collection)
     checkDuplicateHeadings(content, filePath)
+    await checkThumbnail(parsed.data.thumbnail, filePath, collection, slug)
     await checkImages(content, filePath, collection, slug)
   }
 }
@@ -81,6 +82,31 @@ function checkFrontmatter(frontmatter, filePath, collection) {
   if (collection === "posts" && frontmatter.author !== undefined && typeof frontmatter.author !== "object") {
     issues.push(`${relative(filePath)} frontmatter field "author" must be an object`)
   }
+  if (frontmatter.thumbnail !== undefined && (typeof frontmatter.thumbnail !== "string" || !frontmatter.thumbnail.trim())) {
+    issues.push(`${relative(filePath)} frontmatter field "thumbnail" must be a non-empty image path or URL`)
+  }
+}
+
+async function checkThumbnail(thumbnail, filePath, collection, slug) {
+  if (thumbnail === undefined || thumbnail === null || thumbnail === "") {
+    return
+  }
+
+  if (typeof thumbnail !== "string" || !thumbnail.trim()) {
+    return
+  }
+
+  const source = thumbnail.trim()
+  if (/^[a-z][a-z\d+.-]*:/i.test(source) && !/^https:\/\//i.test(source)) {
+    issues.push(`${relative(filePath)} frontmatter field "thumbnail" must use HTTPS or a local image path`)
+    return
+  }
+  if (source.includes("\\") || source.split("/").includes("..")) {
+    issues.push(`${relative(filePath)} frontmatter field "thumbnail" must not contain path traversal`)
+    return
+  }
+
+  await checkImageSource(source, filePath, collection, slug)
 }
 
 function checkDuplicateSlug(slug, filePath, collection) {
@@ -231,7 +257,7 @@ async function checkImageSource(src, filePath, collection, slug, allowMissing = 
   }
 
   if (/^(?:[a-z][a-z\d+.-]*:)?\/\//i.test(src)) {
-    const host = new URL(src).hostname
+    const host = new URL(src, "https://content-image.invalid").hostname
     if (!allowedRemoteHosts.has(host)) {
       issues.push(`${relative(filePath)} remote image host "${host}" is not allowed`)
     }

@@ -4,6 +4,7 @@ import { ArticlePageContent } from "@/components/public/blog/article-page-conten
 import { generateBlogPostStructuredData } from "@/lib/structured-data";
 import { getMessages, parseLocale, withLocaleHref } from "@/lib/i18n";
 import { getSiteUrl } from "@/lib/site-url";
+import { getArticleThumbnailUrl } from "@/lib/content/article-thumbnail";
 import type { Metadata } from "next";
 
 export const dynamicParams = true;
@@ -25,7 +26,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
 
   const baseUrl = getSiteUrl();
   const postUrl = `${baseUrl}/blog/${post.slug}`;
-  const ogImageUrl = `${baseUrl}/blog/${post.slug}/opengraph-image`;
+  const ogImageUrl = getArticleThumbnailUrl(post.thumbnail, "posts", post.slug);
 
   return {
     title: post.title,
@@ -45,8 +46,6 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       images: [
         {
           url: ogImageUrl,
-          width: 1200,
-          height: 630,
           alt: post.title,
         },
       ],

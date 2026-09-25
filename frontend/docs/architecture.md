@@ -152,6 +152,7 @@ interface BlogPost {
   slug: string              // URL-friendly identifier
   title: string
   excerpt: string           // Short description
+  thumbnail?: string        // Social preview image; defaults to platform logo
   content: string           // Full markdown content
   date: string              // Display date
   readTime: string          // Estimated read time
