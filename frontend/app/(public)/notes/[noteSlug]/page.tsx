@@ -5,6 +5,7 @@ import { getProfileContent } from "@/lib/content/site"
 import { getMessages, parseLocale, withLocaleHref } from "@/lib/i18n"
 import { ArticlePageContent } from "@/components/public/blog/article-page-content"
 import { generateNoteStructuredData } from "@/lib/structured-data"
+import { getSiteUrl } from "@/lib/site-url"
 
 export const dynamicParams = true
 
@@ -20,18 +21,34 @@ export async function generateMetadata({ params }: NotePageProps): Promise<Metad
     return { title: "Note Not Found" }
   }
 
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://example.com"
+  const baseUrl = getSiteUrl()
+  const noteUrl = `${baseUrl}/notes/${note.slug ?? noteSlug}`
+  const ogImageUrl = `${noteUrl}/opengraph-image`
   return {
     title: note.title,
     description: note.excerpt,
     openGraph: {
       title: note.title,
       description: note.excerpt,
-      url: `${baseUrl}/notes/${note.slug}`,
+      url: noteUrl,
       type: "article",
+      images: [
+        {
+          url: ogImageUrl,
+          width: 1200,
+          height: 630,
+          alt: note.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: note.title,
+      description: note.excerpt,
+      images: [ogImageUrl],
     },
     alternates: {
-      canonical: `${baseUrl}/notes/${note.slug}`,
+      canonical: noteUrl,
     },
   }
 }
@@ -50,7 +67,7 @@ export default async function NotePage({ params, searchParams }: NotePageProps) 
   }
 
   const copy = getMessages(locale).notes
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://example.com"
+  const baseUrl = getSiteUrl()
   const structuredData = generateNoteStructuredData(note, baseUrl)
 
   return (

@@ -3,6 +3,7 @@ import { getPostBySlug, listRelatedPosts } from "@/lib/content/posts";
 import { ArticlePageContent } from "@/components/public/blog/article-page-content";
 import { generateBlogPostStructuredData } from "@/lib/structured-data";
 import { getMessages, parseLocale, withLocaleHref } from "@/lib/i18n";
+import { getSiteUrl } from "@/lib/site-url";
 import type { Metadata } from "next";
 
 export const dynamicParams = true;
@@ -22,7 +23,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     };
   }
 
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://example.com';
+  const baseUrl = getSiteUrl();
   const postUrl = `${baseUrl}/blog/${post.slug}`;
   const ogImageUrl = `${baseUrl}/blog/${post.slug}/opengraph-image`;
 
@@ -71,7 +72,7 @@ export default async function BlogPostPage({ params, searchParams }: BlogPostPag
     notFound();
   }
 
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://example.com';
+  const baseUrl = getSiteUrl();
   const structuredData = generateBlogPostStructuredData(post, baseUrl);
   const locale = parseLocale(resolvedSearchParams?.lang)
   const copy = getMessages(locale).blog;

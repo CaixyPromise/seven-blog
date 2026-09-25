@@ -1,5 +1,6 @@
 import { getPostBySlug } from "@/lib/content/posts"
 import { createOgImage } from "@/lib/og/image-response"
+import { getSiteUrl } from "@/lib/site-url"
 
 interface BlogPostOpenGraphImageProps {
   params: Promise<{ postSlug: string }>
@@ -13,6 +14,6 @@ export async function GET(_request: Request, { params }: BlogPostOpenGraphImageP
     eyebrow: post ? `CaixyPromise Blog · ${post.category}` : "CaixyPromise Blog",
     title: post?.title ?? "Post Not Found",
     subtitle: post?.excerpt ?? "This article is not available.",
-    footer: `example.com/blog/${postSlug}`,
+    footer: `${getSiteUrl()}/blog/${post?.slug ?? postSlug}`,
   })
 }
